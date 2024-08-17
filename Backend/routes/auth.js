@@ -19,8 +19,10 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
-    await user.save();
-
+    const res  = await user.save();
+if (res){
+  console.log("registration succesful");
+}
     const payload = {
       user: { id: user.id, role: user.role },
     };
