@@ -16,7 +16,7 @@ const navigate= useNavigate()
   const [success, setSuccess] = useState('');
 
   React.useEffect(() => {
-    axios.get("http://localhost:5000/profile", {
+    axios.get("https://classroom-4v2s.onrender.com//profile", {
         withCredentials: true
     })
         .then(res => {
@@ -44,7 +44,7 @@ const navigate= useNavigate()
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        'https://classroom-4v2s.onrender.com//api/auth/login',
         formData,
         { withCredentials: true } // Ensure cookies are sent with the request
       );

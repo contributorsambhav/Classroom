@@ -22,7 +22,7 @@ const PrincipalDashboard = () => {
     fetchClassrooms();
   }, []);
   React.useEffect(() => {
-    axios.get("http://localhost:5000/profile", {
+    axios.get("https://classroom-4v2s.onrender.com//profile", {
         withCredentials: true
     })
         .then(res => {
@@ -40,7 +40,7 @@ const PrincipalDashboard = () => {
   // Fetch all users and filter them by role
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/list");
+      const res = await axios.get("https://classroom-4v2s.onrender.com//list");
       const allUsers = res.data;
       setTeachers(allUsers.filter((user) => user.role === "teacher"));
       setStudents(allUsers.filter((user) => user.role === "student"));
@@ -52,7 +52,7 @@ const PrincipalDashboard = () => {
   // Fetch classrooms and map them with the respective teacher names
   const fetchClassrooms = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/list-classroom");
+      const res = await axios.get("https://classroom-4v2s.onrender.com//list-classroom");
       const classroomsWithTeachers = res.data.map((classroom) => ({
         ...classroom,
         teacherName: teachers.find((t) => t._id === classroom.teacher)?.name || "Unassigned",
@@ -68,7 +68,7 @@ const PrincipalDashboard = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/classroom/create",
+        "https://classroom-4v2s.onrender.com//api/classroom/create",
         newClassroom
       );
       setClassrooms([...classrooms, res.data]);
@@ -82,7 +82,7 @@ const PrincipalDashboard = () => {
   const handleAssignTeacher = async (classroomId, teacherId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/classroom/assign-teacher/${classroomId}`,
+        `https://classroom-4v2s.onrender.com//api/classroom/assign-teacher/${classroomId}`,
         { teacherId }
       );
       fetchClassrooms(); // Refresh classrooms after assignment
@@ -94,7 +94,7 @@ const PrincipalDashboard = () => {
   // Handle deleting a user
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/classroom/users/${userId}`);
+      await axios.delete(`https://classroom-4v2s.onrender.com//api/classroom/users/${userId}`);
       fetchUsers();
     } catch (err) {
       console.error(err);
@@ -104,7 +104,7 @@ const PrincipalDashboard = () => {
   // Handle deleting a classroom
   const handleDeleteClassroom = async (classroomId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/classroom/${classroomId}`);
+      await axios.delete(`https://classroom-4v2s.onrender.com//api/classroom/${classroomId}`);
       setClassrooms(classrooms.filter((classroom) => classroom._id !== classroomId));
     } catch (err) {
       console.error(err);

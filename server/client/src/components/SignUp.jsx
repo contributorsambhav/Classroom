@@ -32,7 +32,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', { ...formData, role: formData.role.toLowerCase() }, { withCredentials: true });
+      const response = await axios.post('https://classroom-4v2s.onrender.com//api/auth/register', { ...formData, role: formData.role.toLowerCase() }, { withCredentials: true });
       setSuccess('Registration successful!');
       setError('');
     } catch (err) {

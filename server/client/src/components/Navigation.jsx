@@ -6,7 +6,7 @@ function Navigation() {
   const dispatch = useDispatch()
 const [userRole,setUserRole] = useState("")
   React.useEffect(() => {
-    axios.get("http://localhost:5000/profile", {
+    axios.get("https://classroom-4v2s.onrender.com//profile", {
         withCredentials: true
     })
         .then(res => {
