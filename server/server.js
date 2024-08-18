@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: '*:*',
+  origin: 'https://classroom-4v2s.onrender.com',
   methods : ["GET","POST","PUT","PATCH","DELETE"],
   credentials : true
 
