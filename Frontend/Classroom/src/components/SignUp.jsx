@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { Eye, EyeOff } from 'react-feather'; // Optional: For using icons
 
 function SignUp() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    role: 'student' // Default role
+    role: 'Student' // Default role
   });
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,14 +32,17 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        console.log(formData);
-        axios.post('http://localhost:5000/api/auth/register', formData, { withCredentials: true });
-        setSuccess('Registration successful!');
+      const response = await axios.post('http://localhost:5000/api/auth/register', { ...formData, role: formData.role.toLowerCase() }, { withCredentials: true });
+      setSuccess('Registration successful!');
       setError('');
     } catch (err) {
       setError(err.response?.data?.msg || 'Something went wrong');
       setSuccess('');
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -46,7 +51,7 @@ function SignUp() {
       
       {/* Role Selection */}
       <div className="flex space-x-4 mb-6">
-        {['principal', 'teacher', 'student'].map((role) => (
+        {['Principal', 'Teacher', 'Student'].map((role) => (
           <button
             key={role}
             onClick={() => handleRoleChange(role)}
@@ -85,16 +90,23 @@ function SignUp() {
             required
           />
         </div>
-        <div>
           <label className="block text-gray-300 mb-1">Password</label>
+        <div className="relative">
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             name="password"
             value={formData.password}
             onChange={handleChange}
             className="w-full p-2 rounded-md border border-gray-700 bg-gray-800 text-gray-200"
             required
           />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 flex items-center px-3"
+          >
+            {showPassword ? <EyeOff className="text-gray-300" /> : <Eye className="text-gray-300" />}
+          </button>
         </div>
         <button
           type="submit"

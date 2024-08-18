@@ -5,17 +5,25 @@ dotenv.config()
 const secret = process.env.JWT_SECRET
 const jwt = require('jsonwebtoken');
 
-function auth(req, res, next) {
-    const token = req.header('Authorization');
-    if (!token) return res.status(401).send('Access denied. No token provided.');
 
-    try {
-        const decoded = jwt.verify(token, secret); // Replace with your actual secret key
-        req.user = decoded;
-        next();
-    } catch (ex) {
-        res.status(400).send('Invalid token.');
+const { getUser } = require("../services/auth");
+
+async function restrictToLoginUserOnly(req, res, next) {
+    const userToken = req.cookies?.auth_token; // Assuming token is stored in cookies
+    if (!userToken) {
+        console.error("No token found in cookies");
+        return res.redirect("/login");
     }
+    const user = getUser(userToken); // Directly use getUser synchronously
+    if (!user) {
+        console.error("Invalid token or user not found");
+    }
+
+    req.user = user; // Set user information in req object
+    next(); // Proceed to next middleware or route handler
 }
 
-module.exports = auth;
+
+
+
+module.exports = {restrictToLoginUserOnly};

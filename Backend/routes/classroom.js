@@ -1,6 +1,6 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
-const auth = require('../middleware/auth');
+const {restrictToLoginUserOnly} = require('../middleware/auth');
 const Classroom = require('../models/Classroom');
 const User = require('../models/User');
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post(
   '/create',
   [
-    auth, // middleware to ensure user is authenticated
+    restrictToLoginUserOnly, // middleware to ensure user is authenticated
     check('name', 'Classroom name is required').not().isEmpty(),
     check('startTime', 'Start time is required').not().isEmpty(),
     check('endTime', 'End time is required').not().isEmpty(),
@@ -41,7 +41,7 @@ router.post(
 );
 
 // Assign a teacher to a classroom (Principal only)
-router.put('/assign-teacher/:classroomId', auth, async (req, res) => {
+router.put('/assign-teacher/:classroomId', restrictToLoginUserOnly, async (req, res) => {
   const { teacherId } = req.body;
 
   try {
@@ -66,7 +66,7 @@ router.put('/assign-teacher/:classroomId', auth, async (req, res) => {
 });
 
 // Add students to a classroom (Principal or Teacher)
-router.put('/add-students/:classroomId', auth, async (req, res) => {
+router.put('/add-students/:classroomId', restrictToLoginUserOnly, async (req, res) => {
   const { studentIds } = req.body;
 
   try {
