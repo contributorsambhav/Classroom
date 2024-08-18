@@ -19,7 +19,7 @@ const TeacherDashboard = () => {
 
   const fetchClassroom = async () => {
     try {
-      const res = await axios.get("https://classroom-4v2s.onrender.com//api/teacher/classroom");
+      const res = await axios.get("https://classroom-4v2s.onrender.com/api/teacher/classroom");
       setClassroom(res.data);
     } catch (err) {
       console.error("Error fetching classroom:", err);
@@ -28,7 +28,7 @@ const TeacherDashboard = () => {
 
   const fetchTimetable = async () => {
     try {
-      const res = await axios.get("https://classroom-4v2s.onrender.com//api/teacher/timetable");
+      const res = await axios.get("https://classroom-4v2s.onrender.com/api/teacher/timetable");
       setTimetable(res.data);
     } catch (err) {
       console.error("Error fetching timetable:", err);
@@ -43,7 +43,7 @@ const TeacherDashboard = () => {
   const handleTimetableSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://classroom-4v2s.onrender.com//api/teacher/timetable", newTimetableEntry);
+      const res = await axios.post("https://classroom-4v2s.onrender.com/api/teacher/timetable", newTimetableEntry);
       setTimetable([...timetable, res.data]);
       setNewTimetableEntry({ day: "", startTime: "", endTime: "", subject: "" });
     } catch (err) {
