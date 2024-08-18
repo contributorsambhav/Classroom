@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import LoginForm from './components/Login';
 import Navigation from './components/Navigation';
+import PrincipalDashboard from "./components/PrincipalDashboard"
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/principal-dashboard" element={<PrincipalDashboard></PrincipalDashboard>} />
+
             <Route path="/" element={<h1>Welcome to the App!</h1>} />
           </Routes>
         </main>
