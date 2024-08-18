@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
+
+import AddStudent from "./AddStudent"
+import AddTeacher from "./AddTeacher"
+
 const PrincipalDashboard = () => {
   const dispatch = useDispatch()
   const [teachers, setTeachers] = useState([]);
@@ -314,6 +318,11 @@ const PrincipalDashboard = () => {
           </tbody>
         </table>
       </section>
+
+      <div className="flex flex-row justify-between">
+        <AddStudent></AddStudent>
+        <AddTeacher></AddTeacher>
+      </div>
     </div>
   );
 };
